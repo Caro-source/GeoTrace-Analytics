@@ -1,0 +1,41 @@
+# ---------------------------------------------------------------
+# GeoTrace Analytics - .gitignore for PHP / XAMPP / VS Code
+# ---------------------------------------------------------------
+
+# Secrets: your real database settings live here. NEVER commit it.
+# Copy config.example.php to config.php and edit the copy instead.
+config.php
+.env
+.env.*
+!.env.example
+
+# Database dumps / backups (may contain real lookup history)
+*.sql.gz
+*.dump
+database/backups/
+database/*-backup.sql
+
+# Logs and temp files
+*.log
+logs/
+tmp/
+cache/
+
+# PHP / Composer (in case it is added later)
+/vendor/
+composer.phar
+
+# Node (in case a build tool is added later)
+node_modules/
+
+# VS Code: keep shared settings, ignore personal ones
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.code-workspace
+.history/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini

@@ -1,0 +1,10 @@
+{
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "editor.tabSize": 4,
+    "[html]": { "editor.tabSize": 2 },
+    "[css]": { "editor.tabSize": 2 },
+    "[javascript]": { "editor.tabSize": 2 },
+    "files.associations": { "*.sql": "sql" }
+}
