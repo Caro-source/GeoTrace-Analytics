@@ -15,7 +15,6 @@ stored in a MySQL database. Batch uploads are saved as named reports you can reo
 - **Lookup history:** every search is saved to MySQL and shown in a history table.
 - **Analytics:** charts of lookups by country, by type, and over time (Chart.js).
 - **Secure by design:** validated input, prepared SQL statements, and HTTPS on the live site.
-
 - -
 ## Built with
 
