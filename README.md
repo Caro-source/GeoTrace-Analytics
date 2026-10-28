@@ -2,7 +2,8 @@
 
 **IP and domain intelligence dashboard.** Enter an IP address or a domain name and
 GeoTrace Analytics shows where it is on an interactive map, who owns the network, and
-a searchable history of every lookup, stored in a MySQL database.
+a searchable history of every lookup, stored in a MySQL database. Batch uploads are
+saved as named reports you can reopen at any time.
 
 > **Status:** in development. See the [roadmap](#roadmap) for what's done and what's next.
 
@@ -14,6 +15,7 @@ a searchable history of every lookup, stored in a MySQL database.
 - **Detect my IP:** find your own public IP address and location with one click.
 - **Interactive map:** every lookup drops a pin on a world map (Leaflet.js + OpenStreetMap).
 - **Batch upload:** upload a `.txt` file with one IP or domain per line and look them all up at once.
+- **Saved reports:** every batch upload is saved as a named report. Reopen it later to see its results and map pins again.
 - **Lookup history:** every search is saved to MySQL and shown in a history table.
 - **Analytics:** charts of lookups by country, by type, and over time (Chart.js).
 - **Secure by design:** validated input, prepared SQL statements, and HTTPS on the live site.
@@ -73,11 +75,23 @@ GeoTrace-Analytics/
 ├── api/
 │   ├── lookup.php        Look up an IP or domain and save it
 │   ├── history.php       Return past lookups
+│   ├── reports.php       Create, list and open batch reports
 │   └── stats.php         Counts for the charts
-├── database/schema.sql   Creates the database and tables
+├── database/schema.sql   Creates the database and its tables
 ├── config.example.php    Settings template (copy to config.php)
 └── favicon files         Site icon
 ```
+
+## Database
+
+The `geotrace` database has two linked tables. One report has many lookups.
+
+| Table | What it stores |
+| --- | --- |
+| `lookups` | One row per lookup: what was searched, its type, resolved IP, location, ISP, status and time. `report_id` links it to a report (empty for single lookups). |
+| `reports` | One row per batch upload: report name, original file name, number of targets and time. |
+
+`lookups.report_id` is a foreign key to `reports.id`.
 
 ## API
 
@@ -88,6 +102,9 @@ All endpoints return JSON.
 | `GET api/lookup.php?target=8.8.8.8` | Look up an IP or domain. Leave out `target` to look up your own IP. |
 | `GET api/history.php` | The most recent lookups, newest first. |
 | `GET api/stats.php` | Lookup counts by country, type and day. |
+| `GET api/reports.php` | All saved batch reports with their lookup counts. |
+| `GET api/reports.php?id=3` | One report and all of its lookups. |
+| `POST api/reports.php` | Start a new batch report and get its id. |
 
 ---
 
@@ -105,6 +122,7 @@ All endpoints return JSON.
 **Week 3: Visualizations and batch upload**
 - [ ] Leaflet.js map pins
 - [ ] `.txt` batch upload with `FileReader`
+- [ ] Saved batch reports (`reports` table)
 - [ ] Chart.js analytics
 
 **Week 4: Security and final polish**
